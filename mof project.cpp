@@ -3,29 +3,7 @@
 
 using namespace std;
 
-class Result{
-    protected:
-        char oop;
-        char dig_elec;
-        char stat;
-        char an_com;
-
-        // Result()
-        // {
-
-        // }
-
-        Result(char oop, char dig_elec, char stat, char an_com)
-        {
-            this->oop = oop;
-            this->dig_elec = dig_elec;
-            this->stat = stat;
-            this->an_com = an_com;
-        }
-    
-};
-
-class Student : public Result{
+class Student{
     public:
         string name;
         int roll;
@@ -36,38 +14,69 @@ class Student : public Result{
 
     // }
 
-    Student(string name, int roll, char oop, char dig_elec, char stat, char an_com) : Result(oop, dig_elec, stat, an_com)
+    Student(string name, int roll)
     {
         this->name = name;
         this->roll = roll;
     }
 
-    int converter(char ch)
-    {
-        if(ch=='A')
-            return 4;
-        else if(ch=='B')
-            return 3;
-        else if(ch=='C')
-            return 2;
-        else if(ch=='D')
-            return 1;
-        else 
-            return 0;
-    }
+};
 
-    double get_cgpa()
-    {
-        double gp = converter(oop)+converter(dig_elec)+converter(stat)+converter(an_com);
-        cgpa = (gp*3)/12;
-        return cgpa;
-    }
+class Result : public Student{
+    public:
+        char oop;
+        char dig_elec;
+        char stat;
+        char an_com;
 
-    void print_cgpa()
-    {
-        cgpa = get_cgpa();
-        cout << cgpa << endl;
-    }
+        // Result()
+        // {
+
+        // }
+
+        Result(string name, int roll, char oop, char dig_elec, char stat, char an_com) : Student(name, roll)
+        {
+            this->oop = oop;
+            this->dig_elec = dig_elec;
+            this->stat = stat;
+            this->an_com = an_com;
+        }
+
+        Result(char oop, char dig_elec, char stat, char an_com)
+        {
+            this->oop = oop;
+            this->dig_elec = dig_elec;
+            this->stat = stat;
+            this->an_com = an_com;
+        }
+    
+        int converter(char ch)
+        {
+            if(ch=='A')
+                return 4;
+            else if(ch=='B')
+                return 3;
+            else if(ch=='C')
+                return 2;
+            else if(ch=='D')
+                return 1;
+            else 
+                return 0;
+        }
+
+        double get_cgpa()
+        {
+            double gp = converter(oop)+converter(dig_elec)+converter(stat)+converter(an_com);
+            cgpa = (gp*3)/12;
+            return cgpa;
+        }
+
+        void print_cgpa()
+        {
+            cgpa = get_cgpa();
+            cout << cgpa << endl;
+        }
+
 };
 
 void clearScreen() {
@@ -87,7 +96,7 @@ void print_menu()
     cout << "3. Search student\n";
 }
 
-Student init_student()
+Result init_student()
 {
     string name;
     int roll;
@@ -112,9 +121,11 @@ Student init_student()
     cout << "Analog Communication: ";
     cin >> an_com;
 
-    Student s1(name,roll,toupper(oop),toupper(dig_elec),toupper(stat),toupper(an_com));
+    Student s1(name,roll);
 
-    return s1;
+    Result r1(toupper(oop),toupper(dig_elec),toupper(stat),toupper(an_com));
+
+    return r1;
 }
 
 int main()
@@ -135,7 +146,7 @@ int main()
     // }
     // (*s1).print_cgpa(); 
 
-    Student s1 = init_student();
+    Result s1 = init_student();
     clearScreen();
     s1.print_cgpa();
 
